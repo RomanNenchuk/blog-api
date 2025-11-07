@@ -10,6 +10,7 @@ app.use(express.json());
 
 await connectToDb();
 
+app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 
 const PORT = process.env.PORT || 3000;
