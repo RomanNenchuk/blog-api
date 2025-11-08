@@ -10,7 +10,7 @@ export const createPost = async (req, res) => {
     res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -20,6 +20,6 @@ export const getAllPosts = async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

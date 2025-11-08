@@ -8,9 +8,14 @@ const refreshTokenSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    revokedAt: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now, expires: "30d" },
   },
   { timestamps: true }
 );
+
+refreshTokenSchema
+  .virtual("isRevoked")
+  .get(() => this.revokedAt && this.revokedAt < new Date());
 
 export const RefreshToken = mongoose.model("RefreshToken", refreshTokenSchema);
