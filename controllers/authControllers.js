@@ -29,12 +29,12 @@ export const login = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true, // process.env.NODE_ENV === "production",
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: process.env.REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ token: accessToken });
+    return res.json(accessToken);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -68,12 +68,12 @@ export const signup = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: process.env.REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ token: accessToken });
+    return res.json(accessToken);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -92,8 +92,8 @@ export const logout = async (req, res) => {
     await existingToken.save();
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
     });
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
@@ -112,7 +112,7 @@ export const refresh = async (req, res) => {
   if (!storedToken)
     return res.status(401).json({ message: "Refresh token not found" });
 
-  if (storedToken.isRevoked())
+  if (storedToken.isRevoked)
     return res.status(401).json({ message: "Token was revoked" });
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (error, user) => {
@@ -123,6 +123,6 @@ export const refresh = async (req, res) => {
       id: user.id,
       email: user.email,
     });
-    res.status(200).json({ accessToken: newAccessToken });
+    res.status(200).json(newAccessToken);
   });
 };

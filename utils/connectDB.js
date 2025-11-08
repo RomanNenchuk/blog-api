@@ -1,4 +1,3 @@
-// utils/connectDB.js
 import mongoose from "mongoose";
 
 export default async function connectDB() {

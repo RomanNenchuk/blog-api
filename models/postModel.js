@@ -16,6 +16,7 @@ let postSchema = new Schema({
     ref: "User",
     required: true,
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
 postSchema.set("toJSON", mongooseJsonTransform);

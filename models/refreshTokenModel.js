@@ -14,8 +14,8 @@ const refreshTokenSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-refreshTokenSchema
-  .virtual("isRevoked")
-  .get(() => this.revokedAt && this.revokedAt < new Date());
+refreshTokenSchema.virtual("isRevoked").get(function () {
+  return this.revokedAt && this.revokedAt < new Date();
+});
 
 export const RefreshToken = mongoose.model("RefreshToken", refreshTokenSchema);
