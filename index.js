@@ -1,16 +1,26 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectToDb from "./connectToDb.js";
+import cors from "cors";
+import connectToDb from "./utils/connectToDb.js";
 import postRoutes from "./routes/postRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
 
 await connectToDb();
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 app.use("/api/posts", postRoutes);
 
 const PORT = process.env.PORT || 3000;
