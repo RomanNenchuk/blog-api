@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
+import { mongooseJsonTransform } from "../utils/mongooseTransform.js";
 const { Schema } = mongoose;
 
 let postSchema = new Schema({
   title: {
+    type: String,
+    required: true,
+  },
+  body: {
     type: String,
     required: true,
   },
@@ -12,5 +17,7 @@ let postSchema = new Schema({
     required: true,
   },
 });
+
+postSchema.set("toJSON", mongooseJsonTransform);
 
 export const Post = mongoose.model("Post", postSchema);

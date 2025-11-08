@@ -44,7 +44,7 @@ export const login = async (req, res) => {
 export const signup = async (req, res) => {
   const { fullname, email, password } = req.body;
 
-  if (!fullname || !email || !(password && password.length < 6))
+  if (!fullname || !email || !password || password.length < 6)
     return res.status(400).json({ message: "Invalid credentials" });
 
   try {

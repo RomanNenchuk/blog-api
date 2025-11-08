@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectToDb from "./utils/connectToDb.js";
+import connectDB from "./utils/connectDB.js";
 import postRoutes from "./routes/postRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
@@ -17,7 +17,7 @@ app.use(
   })
 );
 
-await connectToDb();
+await connectDB();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);

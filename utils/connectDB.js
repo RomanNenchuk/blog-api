@@ -1,6 +1,7 @@
+// utils/connectDB.js
 import mongoose from "mongoose";
 
-export default async function connectToDb() {
+export default async function connectDB() {
   try {
     await mongoose.connect(process.env.DATABASE_URL);
     console.log("Connected to MongoDB Atlas");

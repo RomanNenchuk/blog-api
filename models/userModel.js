@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { mongooseJsonTransform } from "../utils/mongooseTransform.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,5 +9,7 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.set("toJSON", mongooseJsonTransform);
 
 export const User = mongoose.model("User", userSchema);
