@@ -86,3 +86,16 @@ export const getAllPosts = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const getPostById = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId).populate("author").exec();
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
