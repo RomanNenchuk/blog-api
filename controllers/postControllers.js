@@ -75,7 +75,10 @@ export const deletePost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate("author").exec();
+    const posts = await Post.find()
+      .populate("author")
+      .sort({ createdAt: -1 })
+      .exec();
 
     res.status(200).json(posts);
   } catch (error) {

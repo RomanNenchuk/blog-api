@@ -2,22 +2,24 @@ import mongoose from "mongoose";
 import { mongooseJsonTransform } from "../utils/mongooseTransform.js";
 const { Schema } = mongoose;
 
-let postSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+let postSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    body: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  body: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  createdAt: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
 postSchema.set("toJSON", mongooseJsonTransform);
 
